@@ -79,7 +79,7 @@ agent_executor = AgentExecutor(
 # Page config
 st.set_page_config(
     page_title="Agentic AI Assistant",
-    page_icon= "@",
+    page_icon= "🤖",
     layout="centered"
 )
 
@@ -103,7 +103,7 @@ if st.button("Run Agent"):
                 })
                 
                 st.success("Response Generated")
-                st.markdown("## Final Response")
+                st.markdown("###### Final Response")
                 st.write(response["output"])
             
             except Exception as ex:
