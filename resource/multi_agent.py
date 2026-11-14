@@ -3,14 +3,11 @@ import certifi
 import requests
 from dotenv import load_dotenv
 
-from langchain_openai import ChatOpenAI
-from langchain.tools import tool
-from langchain_community.tools.tavily_search import TavilySearchResults
-from langchain import hub
 from langsmith import Client
-
-
+from langchain.tools import tool
+from langchain_openai import ChatOpenAI
 from langchain.agents import create_react_agent, AgentExecutor
+from langchain_community.tools.tavily_search import TavilySearchResults
 
 
 # Load env variables
@@ -23,19 +20,12 @@ WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 
 
 search_tool = TavilySearchResults(max_results=2) # max results means how many of website (link) will return.
-# result = search_tool.invoke("Give me a latest news on AI")
-# result
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0,
     api_key=OPENAI_API_KEY
 )
-
-result = llm.invoke("Tell me joke about AI")
-# result.content
-# print(result.content)
-
 
 @tool
 def get_weather_data(city: str) -> str:
