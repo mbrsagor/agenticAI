@@ -30,18 +30,30 @@ llm = ChatOpenAI(
 @tool
 def get_weather_data(city: str) -> str:
     """Fetch current weather information for a given city."""
-    url = (
-        f"https://api.weatherapi.com/v1/current.json?"
-        f"key={WEATHER_API_KEY}&q={city}"
-    )
-    
-    response = requests.get(url)
-    data = response.json()
-    
-    if "current" not in data:
-        return f"Could not fetch weather data for {city}"
-        
-    return f"Current temperature: {data['current']['temp_c']}°C"
+    try:
+        url = "https://api.weatherapi.com/v1/current.json"
+
+        response = requests.get(
+            url,
+            params={
+                "key": WEATHER_API_KEY,
+                "q": city
+            },
+            timeout=10
+        )
+
+        response.raise_for_status()
+
+        data = response.json()
+
+        return (
+            f"City: {data['location']['name']}\n"
+            f"Temperature: {data['current']['temp_c']}°C\n"
+            f"Condition: {data['current']['condition']['text']}"
+        )
+
+    except requests.RequestException as e:
+        return f"Weather API Error: {str(e)}"
 
 # Corrected: Pass the tool object reference (without parentheses or arguments)
 tools = [search_tool, get_weather_data]
@@ -66,8 +78,9 @@ agent_executor = AgentExecutor(
 
 response = agent_executor.invoke({
     "input": (
-        "Find the capital of India."
+        "Find the capital of Bangladesh."
         "And then find its current weather."
+        "How many of peoples are live in there?"
     )
 })
 
