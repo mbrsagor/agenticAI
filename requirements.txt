@@ -8,3 +8,4 @@ requests==2.31.0
 tavily-python
 python-dotenv
 langchainhub
+streamlit
