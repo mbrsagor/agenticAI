@@ -83,13 +83,13 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("Agentic AI Assistant")
-st.markdown("Search + Weather AI Agent using Langchain")
+st.title("🌦️ Agentic AI Assistant")
+st.markdown("AI Agent using Langchain")
 
 # UI input
 user_query = st.text_input(
     "Enter your query:",
-    placeholder="Example: Find the capital of Bangladesh and current weather"
+    placeholder="Hi, I'm AI assistant. Where should we start?"
 )
 
 # Run agent
